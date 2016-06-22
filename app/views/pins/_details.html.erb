@@ -18,7 +18,8 @@
               <%= form_tag charges_path, id: 'chargesForm' do %>
                   <script src="https://checkout.stripe.com/checkout.js"></script>
                   <%= hidden_field_tag 'stripeToken' %>
-                  <%= hidden_field_tag 'stripeEmail' %>  
+                  <%= hidden_field_tag 'stripeEmail' %>
+                  <%= hidden_field_tag 'id',@pin.id %>  
                   <button id="btn-buy" type="button" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-heart"></span>   I want this!</button>
                   
                   <script>
