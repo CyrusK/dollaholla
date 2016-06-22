@@ -1,0 +1,83 @@
+<p>
+  <strong>Manufacturer:</strong>
+  <%= @pin.manufacturer %>
+</p>
+
+<% if @pin.is_multi? %>
+  <p>
+    <strong>Quantity:</strong>
+    <%= @pin.quantity %>
+  </p>
+<% end %>
+<p>
+      <aside id="details-aside" class="col-sm-4">
+            <!-- <a id="btn-buy" href="receipt.html" class="btn btn-success btn-lg btn-block"><b>I want this!</b></a> -->                 
+
+          <% if @pin.user == current_user %>
+
+              <%= form_tag charges_path, id: 'chargesForm' do %>
+                  <script src="https://checkout.stripe.com/checkout.js"></script>
+                  <%= hidden_field_tag 'stripeToken' %>
+                  <%= hidden_field_tag 'stripeEmail' %>  
+                  <button id="btn-buy" type="button" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-heart"></span>   I want this!</button>
+                  
+                  <script>
+                      var handler = StripeCheckout.configure({
+                        key: '<%= Rails.configuration.stripe[:publishable_key] %>',
+                        token: function(token, arg) {
+                          document.getElementById("stripeToken").value = token.id;
+                          document.getElementById("stripeEmail").value = token.email;
+                          document.getElementById("chargesForm").submit();
+                        }
+                      });
+                       document.getElementById('btn-buy').addEventListener('click', function(e) {
+                        handler.open({
+                          name: 'OMG! <%= @pin.manufacturer %>',
+                          description: '<%= @pin.description %>',
+                          amount: '<%= (@pin.price * 100).floor %>'
+                      });
+                      e.preventDefault();
+                     })
+                  </script>
+              <% end %>
+               
+          <% else %>
+
+              <%= link_to 'I want this!', new_user_registration_path, class: "btn btn-success btn-lg btn-block" %>
+
+          <% end %>
+
+
+
+
+<!-- #old version code, changing UI of buy button up top -->
+            <!--   <%= form_tag charges_path do %>
+                 <article>
+                   <label class="amount">
+                   </label>
+                </article>
+
+                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                   data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                   data-description="Get this item now!"
+                   data-amount="500">
+                   </script>
+              <% end %> -->
+
+<br><br/>
+
+            <ul id="details-infobox" class="list-group">
+              <li class="list-group-item active clearfix">DETAILS</li>
+              <li class="list-group-item">
+                <p><strong>Description:</strong>   <%= @pin.description %></p></li>
+              <li class="list-group-item clearfix">
+                <span class="pull-left content-qualifier"><b>Price: $ <%= @pin.price %></b></span>
+              
+              </li>
+            </ul>
+        </aside>
+
+    </section>
+</div>
+</p>
+       

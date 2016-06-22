@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>ShittyBaba - OMG! Buy. Sell. $20 or LESS! </title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, user-scalable=no">
+      <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+      <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800' >
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+      <%= csrf_meta_tags %>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <%= render 'shared/user_info' %>
+      <script src="https://checkout.stripe.com/checkout.js"></script>
+  </head>
+  
+  <body>
+    <div id="body-interior">
+      <%= render 'shared/header' %>
+      <div class="container">
+        <% flash.each do |name, msg| %>
+          <%= content_tag(:div, msg, class: "alert alert-info") %>
+        <% end %>
+
+        <%= yield %>
+    
+      <%= render 'shared/footer' %>
+    </div>
+    <%= render 'shared/final_scripts' %>
+  </body>
+
+</html>

@@ -1,0 +1,139 @@
+<script type="text/javascript">
+  var incentru = incentru || {};
+  incentru.pageName = "Pin";
+  incentru.pageData = incentru.pageData || {};
+  // incentru.pageData.minimumBid = <%= @pin.minimum_bid %>;
+  <% if @pin.is_multi? %>
+    incentru.pageData.maxQuantity = <%= @pin.quantity %>;
+  <% end %>
+  incentru.pageData.pinId = <%= @pin.id %>;
+
+  $(_.bind(incentru.PinPage.onPageLoad, incentru.PinPage));
+</script>
+
+<div class="panel panel-default">
+  <div class="panel-heading <%= 'center' if !@pin.is_auction %>">
+    <% if @pin.is_auction %>
+      <div class="col-md-6">
+    <% end %>
+    <div class="jcarousel-wrapper">
+      <div class="jcarousel">
+        <ul>
+          <li>
+            <div class="jcarousel-image-container">
+              <%= image_tag @pin.image.url(:medium) %>
+            </div>
+          </li>
+          <% if @pin.image2_file_name %>
+            <li>
+              <div class="jcarousel-image-container">
+                <%= image_tag @pin.image2.url(:medium) %>
+              </div>
+            </li>
+          <% end %>
+          <% if @pin.image3_file_name %>
+            <li>
+              <div class="jcarousel-image-container">
+                <%= image_tag @pin.image3.url(:medium) %>
+              </div>
+            </li>
+          <% end %>
+          <% if @pin.image4_file_name %>
+            <li>
+              <div class="jcarousel-image-container">
+                <%= image_tag @pin.image4.url(:medium) %>
+              </div>
+            </li>
+          <% end %>
+          <% if @pin.image5_file_name %>
+            <li>
+              <div class="jcarousel-image-container">
+                <%= image_tag @pin.image5.url(:medium) %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <% if !@pin.single_image_only? %>
+        <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+        <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+      <% end %>
+        </div>
+      <% if @pin.is_auction %>
+        </div>
+      <div class="col-md-6">
+        <h3>Auction Details</h3>
+        <% if @pin.is_auction_started? && !@pin.is_auction_ended? %>
+          <p>
+            <h4>This auction is live!</h4> 
+              <h4>Auction ends on <%= @pin.auction_end_at.strftime("%B %d, %Y, %H:%M %Z") %>.</h4>
+          </p>
+          <% if @existing_bid %>
+          <br>
+          <p>
+            <strong>You have bid on this:</strong> $<%= number_with_precision(@existing_bid.price, precision: 2) %>
+            <% if @pin.is_multi? %>
+              / unit for <%= @existing_bid.quantity %> units.
+            <% else %>
+              for the item.
+            <% end %>
+          </p>
+          <br/>
+          <% end %>
+
+          <form id="bid-form">
+            <p>
+              <% if @existing_bid.nil? %>
+                If interested,
+              <% else %>
+                If you would like to change your bid to something else,
+              <% end %>
+              place a bid of at least $<%= number_with_precision(@pin.minimum_bid, precision: 2) %> USD with the form below.
+            </p>
+            <p>
+              Price <%= ' per unit' if @pin.is_multi? %>:<br />
+              <input type="text" name="price" value="<%= number_with_precision(@pin.minimum_bid, precision: 2) %>" />
+            </p>
+            <% if @pin.is_multi? %>
+              <p>
+                Quantity requested (max <%= @pin.quantity %>):<br />
+                <input type="text" name="quantity" value="1" />
+              </p>
+              <p>
+                (The full bid will be $<span class="effective-price"><%= number_with_precision(@pin.minimum_bid, precision: 2) %></span> USD)
+              </p>
+            <% end %>
+            <button class="btn btn-primary btn-lg">Place Bid</button>
+            <div id="bid-error" class="error"></div>
+            <div id="bid-success" class="success"></div>
+            <h6>*By placing a bid you agree and are bound to the Terms & Conditions.</h6>
+          </form>
+        <% elsif @pin.is_auction_ended? %>
+          <p>
+            This auction ended at <%= @pin.auction_end_at.strftime("%B %d, %Y, %H:%M %Z") %>.
+          </p>
+          <p>
+            We will get in touch with those who placed bids.
+          </p>
+        <% elsif !@pin.is_auction_started? %>
+          <p>
+            This auction opens at <%= @pin.auction_start_at.strftime("%B %d, %Y, %H:%M %Z") %>.
+          </p>
+        <% end %>
+      </div>
+      <div class="clear"></div>
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <%= render partial: 'pins/details', pin: @pin %>
+  </div>
+</div>
+<center><%= link_to 'Contact Us With Questions', {:controller => "contact", :action => "show", :pin_id => @pin.id}, {class: "btn btn-default btn-lg"} %></center>
+
+<br /><br />
+
+<% if @pin.user == current_user %>
+  <%= link_to 'Edit', edit_pin_path(@pin) %> |
+<% end %>
+<%= link_to 'Back', pins_path %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pin_id: 1
+  file_name: MyString
+  content_type: MyString
+  file_size: 1
+  updated_at: 2015-03-19 18:13:46
+
+two:
+  pin_id: 1
+  file_name: MyString
+  content_type: MyString
+  file_size: 1
+  updated_at: 2015-03-19 18:13:46

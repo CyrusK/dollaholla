@@ -1,0 +1,46 @@
+<h1>Contact Us</h1>
+<p><b><h4>Fill in your information below for a specific request to buy or sell.</h4></b></p>
+<p><b><h4>For all other inqueries contact <i>info@incentru.com.</i></h4></b></p>
+
+<div class="jumbotron">
+    <% if @pin %>
+      <div style="margin-left:10px;">
+        <%= image_tag @pin.image.url (:medium) %><br />
+        <%= @pin.description %>
+      </div><br />
+    <% end %>
+    <div class="container-content">
+      <div class="container">
+        <%= form_tag(send_mail_path) do %>
+          <input type="hidden" name="pin_id" value="<%= params[:pin_id] %>" />
+
+          <div class="form-group">
+            <%= label_tag 'name', 'Name' %>
+            <%= text_field_tag 'name', nil, class: 'form-control', placeholder: 'Your First Name' %>
+          </div>
+          
+          <div class="form-group">
+            <%= label_tag 'last', 'Last' %>
+            <%= text_field_tag 'name', nil, class: 'form-control', placeholder: 'Your Last Name' %>
+          </div>
+          
+          <div class="form-group">
+            <%= label_tag 'email', 'Email' %>
+            <%= email_field_tag 'email', nil, class: 'form-control', placeholder: 'your@email.com' %>
+          </div>
+          
+          <div class="form-group">
+            <%= label_tag 'phone', 'Phone' %>
+            <%= text_field_tag 'phone', nil, class: 'form-control', placeholder: 'Enter Phone Number' %>
+          </div>
+          
+          <div class="form-group">
+            <%= label_tag 'comments', 'Comments' %>
+            <%= text_area_tag 'comments', nil, class: 'form-control', rows: 4, placeholder: 'Comments...' %>
+          </div>
+          <%= submit_tag nil, class: 'btn btn-primary btn-lg' %>
+        <% end %>
+        <br />
+      </div>
+    </div>
+</div>

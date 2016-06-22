@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1>
+      <a href="/pins/<%= @pin.id %>">Pin #<%= @pin.id %></a></h1>
+  </div>
+  <div class="panel-body">
+    <%= render partial: 'pins/details', pin: @pin %>
+
+    <p>
+      <strong>Is auction:</strong> <%= @pin.is_auction? %>
+    </p>
+
+    <% if @pin.is_auction? %>
+      <p>
+        <strong>Started?:</strong> <%= @pin.is_auction_started? %>
+      </p>
+      <p>
+        <strong>Starts at:</strong> <%= @pin.auction_start_at %>
+      </p>
+      <p>
+        <strong>Ended?:</strong> <%= @pin.is_auction_ended? %>
+      </p>
+      <p>
+        <strong>Ends at:</strong> <%= @pin.auction_end_at %>
+      </p>
+      <p>
+        <strong>Minimum bid required:</strong> $<%= number_with_precision(@pin.minimum_bid, precision: 2) %>
+      </p>
+      <% if @pin.reserve %>
+        <p>
+          <strong>Reserve price:</strong> $<%= number_with_precision(@pin.reserve, precision: 2) %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <h2>Active Bids</h2>
+    <%= render partial: 'admin/pin_bids_table', locals: {bids: @active_bids } %>
+
+    <h2>Cancelled Bids</h2>
+    <%= render partial: 'admin/pin_bids_table', locals: {bids: @cancelled_bids } %>
+  </div>
+</div>

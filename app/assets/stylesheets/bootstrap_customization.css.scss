@@ -1,0 +1,31 @@
+@import url(http://fonts.googleapis.com/css?family=Arimo:400,700);
+
+@import "bootstrap-sprockets";
+
+$body-bg: #bdc3c7;
+$font-family: 'Montserrat', sans-serif;
+$navbar-default-link-color: white;
+$navbar-default-bg: #e74c3c;
+$navbar-default-link-hover-color: #ecf0f1;
+$jumbotron-bg: #2c3e50;
+$btn-default-bg: #2980b9;
+$btn-default-color: white;
+$btn-success-bg: #1abc9c;
+@import 'bootstrap';
+
+.jumbotron {
+    position: relative;
+    background: #000 url("sbaba.png") center center;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.center {
+  text-align: center;
+}
+
+.navbar-header .navbar-brand{
+    max-height: 20px;
+}

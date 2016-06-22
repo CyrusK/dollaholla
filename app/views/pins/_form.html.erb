@@ -1,0 +1,59 @@
+<%= form_for @pin, html: { multipart: true } do |f| %>  
+  <%= form_for(@pin) do |f| %>
+    <% if @pin.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@pin.errors.count, "error") %> prohibited this pin from being saved:</h2>
+        <ul>
+           <% @pin.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+           <% end %>
+         </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :image %><br>
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image2, 'Image 2 (optional)' %><br>
+      <%= f.file_field :image2, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image3, 'Image 3 (optional)' %><br>
+      <%= f.file_field :image3, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image4, 'Image 4 (optional)' %><br>
+      <%= f.file_field :image4, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image5, 'Image 5 (optional)' %><br>
+      <%= f.file_field :image5, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :manufacturer %><br>
+      <%= f.text_field :manufacturer, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :price %><br>
+      <%= f.number_field :price, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description %><br>
+      <%= f.text_field :description, class: "form-control" %>
+    </div>
+
+    <div class="form-group" >
+      <%= f.submit "Submit", class: "btn btn-success btn-lg" %>
+    </div>
+  <% end %>
+<% end %>
+

@@ -1,0 +1,22 @@
+
+<div id="content" class="container">
+    <header id="content-header">
+        <%= image_tag('header-image.jpg', id: "content-head-img", alt: "Learn Growth Hacking") %>
+
+    </header>
+    <section id="content-details" class="row clearfix">
+        <article id="details-article" class="col-sm-8">
+          <center>
+            <br><br/>
+            <% if user_signed_in? %>
+
+            <% else %>
+              <p>
+                  <%= link_to "Sign Up Now!", new_user_registration_path, class: "btn btn-success btn-lg" %> 
+              </p>
+              <br><br/>
+            <% end %>
+        </center>
+      </article>
+
+

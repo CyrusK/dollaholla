@@ -1,0 +1,18 @@
+$footer_height: 50px;
+
+#main-footer-push {
+  height: $footer_height;
+}
+
+#main-footer {
+  height: $footer_height;
+  position: absolute;
+  margin: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: #F5F5F5;
+  padding: 15px 15px;
+  border-radius: 0;
+}

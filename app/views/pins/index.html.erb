@@ -1,0 +1,44 @@
+<%= render 'pages/home' unless user_signed_in? %>
+
+<h3>Listings</h3>
+  <% if user_signed_in? %>
+    <%= link_to '+Add Listing', new_pin_path, class: "btn btn-default" %>
+    <% else %>
+    <%= link_to '+Add Listing', new_user_session_path, class: "btn btn-default" %>
+  <% end %>
+  <%= link_to 'Buy Request', contact_path, class: "btn btn-danger" %>
+
+  <div id="pins" class="transitions-enabled">
+    <% @pins.each do |pin| %>
+      <div class="box panel panel-default">
+        <div class="panel-body">
+          <%= link_to (image_tag pin.image.url(:medium)), pin %>
+          <p></p>
+          <strong>Manufacturer:</strong>
+          <%= pin.manufacturer %>
+          <p></p>
+          <strong>Price: $</strong>
+          <%= pin.price %>
+          <p></p>
+          <strong>Description:</strong>
+          <%= pin.description %>
+          <% if pin.is_multi? %>
+            <strong>Quantity:</strong>
+            <%= pin.quantity %>
+          <% end %>
+          <p></p>
+
+<!--           <center><%= link_to 'Contact Us With Questions', {:controller => "contact", :action => "show", :pin_id => pin.id}, {class: "btn btn-default"} %></center>
+ -->
+          <% if pin.user == current_user %>
+            <%= link_to 'Edit', edit_pin_path(pin) %>
+            <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
+    
+<div class="center">
+   <%= will_paginate @posts, renderer: BootstrapPagination::Rails %>
+</div>

@@ -1,0 +1,38 @@
+<% if bids.length > 0 %>
+  <table class="table table-striped table-bordered">
+    <tr>
+      <td>Bid Id</td>
+      <td>For Email</td>
+      <td>Price</td>
+      <td>Quantity</td>
+      <td>Status</td>
+      <td>Created At</td>
+    </tr>
+    <% bids.each do |bid| %>
+      <tr>
+        <td>
+          <%= bid.id %>
+        </td>
+        <td>
+          <%= bid.user.email %>
+        </td>
+        <td>
+          $<%= number_with_precision(bid.price, precision: 2) %>
+        </td>
+        <td>
+          <%= bid.quantity %>
+        </td>
+        <td>
+          <%= bid.cancelled? ? 'Cancelled' : 'Active' %>
+        </td>
+        <td>
+          <%= bid.created_at %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div>
+    No bids here.
+  </div>
+<% end %>
